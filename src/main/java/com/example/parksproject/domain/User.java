@@ -43,4 +43,9 @@ public class User {
     @Column(nullable = true)
     private String providerId;
 
+    public User update(String name, String imageUrl) {
+        this.name = name;
+        this.imageUrl = imageUrl;
+        return this;
+    }
 }
