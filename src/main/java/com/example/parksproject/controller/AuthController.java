@@ -1,6 +1,12 @@
 package com.example.parksproject.controller;
 
+import com.example.parksproject.domain.AuthProvider;
+import com.example.parksproject.domain.User;
+import com.example.parksproject.exception.BadRequestException;
+import com.example.parksproject.payload.AuthResponse;
 import com.example.parksproject.payload.LoginRequest;
+import com.example.parksproject.payload.SignUpRequest;
+import com.example.parksproject.payload.SignUpResponse;
 import com.example.parksproject.repository.UserRepository;
 import com.example.parksproject.security.TokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -32,9 +38,26 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail()), loginRequest.getPassword());
+        Authentication authenticate = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getEmail(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authenticate);
         String token = tokenProvider.createToken(authenticate);
-        return ResponseEntity.ok(new AuthResponse)
+        return ResponseEntity.ok(new AuthResponse(token));
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+            throw new BadRequestException("이미 사용중인 이메일입니다.");
+        }
+
+        User result = userRepository.save(User.builder()
+                .name(signUpRequest.getName())
+                .email(signUpRequest.getEmail())
+                .password(passwordEncoder.encode(signUpRequest.getPassword()))
+                .authProvider(AuthProvider.local).build());
+
+        return ResponseEntity.ok(new SignUpResponse(true,"회원가입 성공"));
     }
 }
