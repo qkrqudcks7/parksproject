@@ -10,11 +10,11 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @AllArgsConstructor @NoArgsConstructor
-@EqualsAndHashCode(of = "id")
 @Builder
 public class User {
 
     @Id @GeneratedValue
+    @Column(name = "user_id")
     private Long id;
 
     @Column(nullable = false)
@@ -42,6 +42,15 @@ public class User {
 
     @Column(nullable = true)
     private String providerId;
+
+    @Column(nullable = true)
+    private String bio;
+
+    @Column(nullable = true)
+    private String occupation;
+
+    @Column(nullable = true)
+    private String location;
 
     public User update(String name, String imageUrl) {
         this.name = name;
