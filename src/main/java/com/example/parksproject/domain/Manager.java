@@ -26,4 +26,7 @@ public class Manager {
     @JoinColumn(name = "study_id")
     private Study study;
 
+    public void addStudy(Study study){
+        this.study = study;
+    }
 }

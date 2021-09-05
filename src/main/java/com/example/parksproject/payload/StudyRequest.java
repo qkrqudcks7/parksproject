@@ -1,11 +1,6 @@
 package com.example.parksproject.payload;
 
-import com.example.parksproject.domain.Manager;
-import com.example.parksproject.domain.Member;
 import lombok.Data;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 public class StudyRequest {
