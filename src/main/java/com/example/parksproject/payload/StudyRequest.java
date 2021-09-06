@@ -11,6 +11,8 @@ public class StudyRequest {
 
     private String shortDescription;
 
+    private String longDescription;
+
     private String image;
 
     private boolean recruiting;

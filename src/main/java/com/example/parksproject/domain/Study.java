@@ -5,6 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 @Getter
@@ -23,6 +25,9 @@ public class Study {
 
     @Column(nullable = false)
     private String shortDescription;
+
+    @Column(nullable = false)
+    private String longDescription;
 
     @Lob @Basic(fetch = FetchType.EAGER)
     private String image;
@@ -47,6 +52,12 @@ public class Study {
         this.members.add(member);
     }
 
+    public List<String> getMembers() {
+        return members.stream().map(member -> member.getUser().getName()).collect(Collectors.toList());
+    }
 
+    public List<String> getManagers() {
+        return managers.stream().map(manager -> manager.getUser().getName()).collect(Collectors.toList());
+    }
 
 }
