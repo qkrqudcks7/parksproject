@@ -31,7 +31,7 @@ public class User {
     private Role role;
 
     @Column(nullable = false)
-    private final Boolean emailVerified = false;
+    private Boolean emailVerified = false;
 
     @JsonIgnore
     private String password;
