@@ -11,8 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,8 +40,9 @@ public class StudyController {
 
     @PostMapping("/study")
     public ResponseEntity<?> makeStudy (@CurrentUser UserPrincipal userPrincipal,
-                                        @Valid @RequestBody StudyRequest studyRequest) {
-        return studyService.makeStudy(studyRequest, userPrincipal);
+                                        @Valid StudyRequest studyRequest,
+                                        MultipartFile multipartFile) throws IOException {
+        return studyService.makeStudy(studyRequest, userPrincipal,multipartFile);
     }
 
     @GetMapping("/onestudy/{id}")

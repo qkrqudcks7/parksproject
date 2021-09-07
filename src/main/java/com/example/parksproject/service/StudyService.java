@@ -17,6 +17,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Service
 @Transactional
@@ -28,8 +31,13 @@ public class StudyService {
     private final StudyRepository studyRepository;
     private final ManagerRepository managerRepository;
     private final MemberRepository memberRepository;
+    private final S3FileUploadService s3FileUploadService;
 
-    public ResponseEntity<?> makeStudy(StudyRequest studyRequest, UserPrincipal userPrincipal) {
+    public ResponseEntity<?> makeStudy(StudyRequest studyRequest, UserPrincipal userPrincipal, MultipartFile multipartFile) throws IOException {
+        if (multipartFile != null) {
+            studyRequest.setImage(s3FileUploadService.upload(multipartFile));
+        }
+
         User u = userRepository.findById(userPrincipal.getId()).get();
 
         Manager manager = Manager.builder()
