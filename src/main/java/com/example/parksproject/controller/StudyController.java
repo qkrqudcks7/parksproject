@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,8 +35,13 @@ public class StudyController {
                 .collect(Collectors.toList());
 
         Collections.reverse(collect);
-
-        return new ResponseEntity<>(collect, HttpStatus.OK);
+        List<StudyResponse> newOne = new ArrayList<>();
+        for (StudyResponse i:collect) {
+            if (i.isPublished()) {
+                newOne.add(i);
+            }
+        }
+        return new ResponseEntity<>(newOne, HttpStatus.OK);
     }
 
     @PostMapping("/study")
