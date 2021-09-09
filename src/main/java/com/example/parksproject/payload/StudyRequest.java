@@ -7,7 +7,9 @@ public class StudyRequest {
 
     private String path;
 
-    private String typeName;
+    private String categoryName;
+
+    private String parentCategoryName;
 
     private String title;
 

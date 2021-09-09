@@ -12,15 +12,19 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CategoryType {
+public class StudyCategory {
 
     @Id @GeneratedValue
-    @Column(name = "categoryType_id")
+    @Column(name = "studyType_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Type type;
+    private Study study;
+
+    public void addStudy(Study study) {
+        this.study = study;
+    }
 }

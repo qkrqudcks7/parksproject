@@ -25,13 +25,15 @@ public class StudyResponse {
 
     private List<String> managers;
 
+    private List<String> categorys;
+
     private boolean recruiting;
 
     private boolean published;
 
     private boolean closed;
 
-    public StudyResponse(Long id, String path, String title, String shortDescription, String longDescription, String image, List<String> members, List<String> managers, boolean recruiting, boolean published, boolean closed) {
+    public StudyResponse(Long id, String path, String title, String shortDescription, String longDescription, String image, List<String> members, List<String> managers, List<String> categorys, boolean recruiting, boolean published, boolean closed) {
         this.id = id;
         this.path = path;
         this.title = title;
@@ -40,6 +42,7 @@ public class StudyResponse {
         this.image = image;
         this.members = members;
         this.managers = managers;
+        this.categorys = categorys;
         this.recruiting = recruiting;
         this.published = published;
         this.closed = closed;

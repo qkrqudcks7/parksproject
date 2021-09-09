@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -25,7 +27,7 @@ public class StudyService {
     private final StudyRepository studyRepository;
     private final ManagerRepository managerRepository;
     private final MemberRepository memberRepository;
-    private final TypeRepository typeRepository;
+    private final CategoryRepository categoryRepository;
     private final S3FileUploadService s3FileUploadService;
 
     public ResponseEntity<?> makeStudy(StudyRequest studyRequest, UserPrincipal userPrincipal, MultipartFile multipartFile) throws IOException {
@@ -34,10 +36,18 @@ public class StudyService {
         }
 
         User u = userRepository.findById(userPrincipal.getId()).get();
-        Type type = typeRepository.findByName(studyRequest.getTypeName());
+        Category category = categoryRepository.findByName(studyRequest.getCategoryName());
+        Category parent = categoryRepository.findByName(studyRequest.getParentCategoryName());
 
-        StudyType studyType = StudyType.builder()
-                .type(type).build();
+        StudyCategory studyCategory = StudyCategory.builder()
+                .category(category).build();
+
+        StudyCategory studyParentCategory = StudyCategory.builder()
+                .category(parent).build();
+
+        List<StudyCategory> studyCategories = new ArrayList<>();
+        studyCategories.add(studyCategory);
+        studyCategories.add(studyParentCategory);
 
         Manager manager = Manager.builder()
                 .user(u).build();
@@ -52,16 +62,17 @@ public class StudyService {
                 .published(studyRequest.isPublished())
                 .closed(studyRequest.isClosed()).build();
         study.addManager(manager);
-        study.addStudyType(studyType);
+        study.addStudyCategory(studyCategories);
+        studyCategory.addStudy(study);
+        studyParentCategory.addStudy(study);
         manager.addStudy(study);
-        studyType.addStudy(study);
         studyRepository.save(study);
         return ResponseEntity.ok("스터디 생성 완료");
     }
 
     public ResponseEntity<?> getOneBoard(Long id) {
         Study study = studyRepository.findById(id).get();
-        StudyResponse studyResponse = new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(), study.getMembers(), study.getManagers(), study.isRecruiting(), study.isPublished(), study.isClosed());
+        StudyResponse studyResponse = new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(), study.getMembers(), study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed());
 
         return new ResponseEntity<>(studyResponse, HttpStatus.OK);
     }

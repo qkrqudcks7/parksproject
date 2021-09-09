@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Entity
 @Getter
@@ -39,7 +38,7 @@ public class Study {
     private final List<Manager> managers = new ArrayList<>();
 
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
-    private final List<StudyType> types = new ArrayList<>();
+    private final List<StudyCategory> types = new ArrayList<>();
 
     private boolean recruiting;
 
@@ -55,7 +54,9 @@ public class Study {
         this.members.add(member);
     }
 
-    public void addStudyType(StudyType studyType) { this.types.add(studyType); }
+    public void addStudyCategory(List<StudyCategory> studyCategory) {
+        this.types.addAll(studyCategory);
+    }
 
     public List<String> getMembers() {
         return members.stream().map(member -> member.getUser().getName()).collect(Collectors.toList());
@@ -63,6 +64,10 @@ public class Study {
 
     public List<String> getManagers() {
         return managers.stream().map(manager -> manager.getUser().getName()).collect(Collectors.toList());
+    }
+
+    public List<String> getCategorys() {
+        return types.stream().map(category -> category.getCategory().getName()).collect(Collectors.toList());
     }
 
 }
