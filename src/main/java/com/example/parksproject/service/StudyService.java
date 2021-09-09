@@ -1,15 +1,9 @@
 package com.example.parksproject.service;
 
-import com.example.parksproject.domain.Manager;
-import com.example.parksproject.domain.Member;
-import com.example.parksproject.domain.Study;
-import com.example.parksproject.domain.User;
+import com.example.parksproject.domain.*;
 import com.example.parksproject.payload.StudyRequest;
 import com.example.parksproject.payload.StudyResponse;
-import com.example.parksproject.repository.ManagerRepository;
-import com.example.parksproject.repository.MemberRepository;
-import com.example.parksproject.repository.StudyRepository;
-import com.example.parksproject.repository.UserRepository;
+import com.example.parksproject.repository.*;
 import com.example.parksproject.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +25,7 @@ public class StudyService {
     private final StudyRepository studyRepository;
     private final ManagerRepository managerRepository;
     private final MemberRepository memberRepository;
+    private final TypeRepository typeRepository;
     private final S3FileUploadService s3FileUploadService;
 
     public ResponseEntity<?> makeStudy(StudyRequest studyRequest, UserPrincipal userPrincipal, MultipartFile multipartFile) throws IOException {
@@ -39,6 +34,10 @@ public class StudyService {
         }
 
         User u = userRepository.findById(userPrincipal.getId()).get();
+        Type type = typeRepository.findByName(studyRequest.getTypeName());
+
+        StudyType studyType = StudyType.builder()
+                .type(type).build();
 
         Manager manager = Manager.builder()
                 .user(u).build();
@@ -53,7 +52,9 @@ public class StudyService {
                 .published(studyRequest.isPublished())
                 .closed(studyRequest.isClosed()).build();
         study.addManager(manager);
+        study.addStudyType(studyType);
         manager.addStudy(study);
+        studyType.addStudy(study);
         studyRepository.save(study);
         return ResponseEntity.ok("스터디 생성 완료");
     }

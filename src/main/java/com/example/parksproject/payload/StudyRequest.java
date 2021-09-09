@@ -7,6 +7,8 @@ public class StudyRequest {
 
     private String path;
 
+    private String typeName;
+
     private String title;
 
     private String shortDescription;
