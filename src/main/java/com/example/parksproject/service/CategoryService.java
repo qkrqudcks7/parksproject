@@ -49,4 +49,13 @@ public class CategoryService {
 
         return ResponseEntity.ok(response);
     }
+
+    public ResponseEntity<?> findParentCategoryList() {
+        List<Category> byParentIsNull = categoryRepository.findByParentIsNull();
+
+        List<CategoryResponse> response = byParentIsNull.stream()
+                .map(parent -> new CategoryResponse(parent.getName())).collect(Collectors.toList());
+
+        return ResponseEntity.ok(response);
+    }
 }

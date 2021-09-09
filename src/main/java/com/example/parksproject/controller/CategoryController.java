@@ -33,4 +33,9 @@ public class CategoryController {
         return categoryService.findCategoryChildList(name);
     }
 
+    @GetMapping("/category/parent")
+    public ResponseEntity<?> findParentCategory() {
+        return categoryService.findParentCategoryList();
+    }
+
 }
