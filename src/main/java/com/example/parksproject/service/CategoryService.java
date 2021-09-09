@@ -22,4 +22,16 @@ public class CategoryService {
 
         return ResponseEntity.ok("만들기 성공");
     }
+
+    public ResponseEntity<?> makeChildCategory(CategoryRequest categoryRequest) {
+        Category category = categoryRepository.findByName(categoryRequest.getName());
+
+        Category child = Category.builder()
+                .name(categoryRequest.getChildName())
+                .parent(category).build();
+        category.addChildCategory(child);
+        categoryRepository.save(child);
+
+        return ResponseEntity.ok("성공");
+    }
 }

@@ -16,10 +16,17 @@ public class CategoryController {
 
     public final CategoryService categoryService;
 
-    @PostMapping("/category")
-    public ResponseEntity<?> addCategory(@Valid @RequestBody CategoryRequest categoryRequest) {
+    @PostMapping("/category/parent")
+    public ResponseEntity<?> addParentCategory(@Valid @RequestBody CategoryRequest categoryRequest) {
 
         return categoryService.makeParentCategory(categoryRequest);
+
+    }
+
+    @PostMapping("/category/child")
+    public ResponseEntity<?> addChildCategory(@Valid @RequestBody CategoryRequest categoryRequest) {
+
+        return categoryService.makeChildCategory(categoryRequest);
 
     }
 
