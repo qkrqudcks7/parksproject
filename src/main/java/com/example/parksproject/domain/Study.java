@@ -46,6 +46,8 @@ public class Study {
 
     private boolean closed;
 
+    private String location;
+
     public void addManager(Manager manager) {
         this.managers.add(manager);
     }
