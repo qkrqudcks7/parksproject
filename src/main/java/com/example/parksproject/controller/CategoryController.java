@@ -1,6 +1,8 @@
 package com.example.parksproject.controller;
 
+import com.example.parksproject.domain.Category;
 import com.example.parksproject.payload.CategoryRequest;
+import com.example.parksproject.repository.CategoryRepository;
 import com.example.parksproject.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import javax.validation.Valid;
 public class CategoryController {
 
     public final CategoryService categoryService;
+    public final CategoryRepository categoryRepository;
 
     @PostMapping("/category/parent")
     public ResponseEntity<?> addParentCategory(@Valid @RequestBody CategoryRequest categoryRequest) {
@@ -38,4 +41,8 @@ public class CategoryController {
         return categoryService.findParentCategoryList();
     }
 
+    @DeleteMapping("/category/parent/{id}")
+    public void deleteById(@PathVariable("id") Long id) {
+        categoryRepository.deleteById(id);
+    }
 }
