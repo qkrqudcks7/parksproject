@@ -7,10 +7,7 @@ import com.example.parksproject.security.UserPrincipal;
 import com.example.parksproject.service.ApplyStudyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -26,5 +23,10 @@ public class ApplyStudyController {
                                    @Valid @RequestBody ApplyStudyRequest applyStudyRequest,
                                    @PathVariable("id") Long id) {
         return applyStudyService.makeApply(applyStudyRequest,id,userPrincipal);
+    }
+
+    @GetMapping("/apply/{id}")
+    public ResponseEntity<?> getStudyApplies(@PathVariable("id") Long id) {
+        return applyStudyService.getThisApply(id);
     }
 }

@@ -5,6 +5,7 @@ import com.example.parksproject.domain.ApplyStudy;
 import com.example.parksproject.domain.Study;
 import com.example.parksproject.domain.User;
 import com.example.parksproject.payload.ApplyStudyRequest;
+import com.example.parksproject.payload.ApplyStudyResponse;
 import com.example.parksproject.payload.StudyRequest;
 import com.example.parksproject.repository.ApplyStudyRepository;
 import com.example.parksproject.repository.StudyRepository;
@@ -14,6 +15,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -38,5 +42,18 @@ public class ApplyStudyService {
         applyStudyRepository.save(applyStudy);
 
         return ResponseEntity.ok("신청이 완료되었습니다.");
+    }
+
+    public ResponseEntity<?> getThisApply(Long id) {
+        Study study = studyRepository.findById(id).get();
+
+        List<ApplyStudy> applyStudies = applyStudyRepository.findByStudyId(study.getId());
+
+        List<ApplyStudyResponse> applyStudyResponse = applyStudies.stream().map(
+                apply -> new ApplyStudyResponse(apply.getId(), apply.getApplyState(), apply.getUser().getId(), apply.getMessage())
+        ).collect(Collectors.toList());
+
+
+        return ResponseEntity.ok(applyStudyResponse);
     }
 }
