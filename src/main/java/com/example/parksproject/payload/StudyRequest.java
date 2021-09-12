@@ -24,4 +24,8 @@ public class StudyRequest {
     private boolean published;
 
     private boolean closed;
+
+    private String location;
+
+    private int maxMember;
 }

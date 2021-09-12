@@ -60,7 +60,9 @@ public class StudyService {
                 .image(studyRequest.getImage())
                 .recruiting(studyRequest.isRecruiting())
                 .published(studyRequest.isPublished())
-                .closed(studyRequest.isClosed()).build();
+                .closed(studyRequest.isClosed())
+                .location(studyRequest.getLocation())
+                .maxMember(studyRequest.getMaxMember()).build();
         study.addManager(manager);
         study.addStudyCategory(studyCategories);
         studyCategory.addStudy(study);
@@ -72,7 +74,7 @@ public class StudyService {
 
     public ResponseEntity<?> getOneBoard(Long id) {
         Study study = studyRepository.findById(id).get();
-        StudyResponse studyResponse = new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(), study.getMembers(), study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed());
+        StudyResponse studyResponse = new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(), study.getMembers(), study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed(), study.getMembersId(), study.getLocation(), study.getMaxMember());
 
         return new ResponseEntity<>(studyResponse, HttpStatus.OK);
     }

@@ -48,6 +48,8 @@ public class Study {
 
     private String location;
 
+    private int maxMember;
+
     public void addManager(Manager manager) {
         this.managers.add(manager);
     }
@@ -62,6 +64,9 @@ public class Study {
 
     public List<String> getMembers() {
         return members.stream().map(member -> member.getUser().getName()).collect(Collectors.toList());
+    }
+    public List<Long> getMembersId() {
+        return managers.stream().map(manager -> manager.getUser().getId()).collect(Collectors.toList());
     }
 
     public List<String> getManagers() {
