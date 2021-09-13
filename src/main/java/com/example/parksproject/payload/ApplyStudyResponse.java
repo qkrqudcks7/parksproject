@@ -14,6 +14,8 @@ public class ApplyStudyResponse {
 
     private Long userId;
 
+    private String userName;
+
     private String message;
 
 }

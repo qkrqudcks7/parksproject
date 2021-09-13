@@ -30,7 +30,7 @@ public class User {
     @Column(nullable = true)
     private Role role;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Boolean emailVerified = false;
 
     @JsonIgnore

@@ -50,7 +50,7 @@ public class ApplyStudyService {
         List<ApplyStudy> applyStudies = applyStudyRepository.findByStudyId(study.getId());
 
         List<ApplyStudyResponse> applyStudyResponse = applyStudies.stream().map(
-                apply -> new ApplyStudyResponse(apply.getId(), apply.getApplyState(), apply.getUser().getId(), apply.getMessage())
+                apply -> new ApplyStudyResponse(apply.getId(), apply.getApplyState(), apply.getUser().getId(), apply.getUser().getName(), apply.getMessage())
         ).collect(Collectors.toList());
 
 
