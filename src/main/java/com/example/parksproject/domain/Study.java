@@ -40,6 +40,9 @@ public class Study {
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
     private final List<StudyCategory> types = new ArrayList<>();
 
+    @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
+    private final List<ApplyStudy> applyStudies = new ArrayList<>();
+
     private boolean recruiting;
 
     private boolean published;
@@ -58,6 +61,10 @@ public class Study {
         this.members.add(member);
     }
 
+    public void addApplyStudies(ApplyStudy applyStudy) {
+        this.applyStudies.add(applyStudy);
+    }
+
     public void addStudyCategory(List<StudyCategory> studyCategory) {
         this.types.addAll(studyCategory);
     }
@@ -67,6 +74,10 @@ public class Study {
     }
     public List<Long> getMembersId() {
         return managers.stream().map(manager -> manager.getUser().getId()).collect(Collectors.toList());
+    }
+
+    public List<String> getApplies() {
+        return applyStudies.stream().map(applyStudy -> applyStudy.getUser().getName()).collect(Collectors.toList());
     }
 
     public List<String> getManagers() {

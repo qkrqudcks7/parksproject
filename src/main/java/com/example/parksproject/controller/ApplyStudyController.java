@@ -29,4 +29,14 @@ public class ApplyStudyController {
     public ResponseEntity<?> getStudyApplies(@PathVariable("id") Long id) {
         return applyStudyService.getThisApply(id);
     }
+
+    @PostMapping("/addapply/{id}")
+    public ResponseEntity<?> addStudyApply(@PathVariable("id") Long id) {
+        return applyStudyService.addApply(id);
+    }
+
+    @DeleteMapping("/apply/{id}")
+    public ResponseEntity<?> deleteApply(@PathVariable("id") Long id) {
+        return applyStudyService.refuseApply(id);
+    }
 }

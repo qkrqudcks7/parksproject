@@ -56,4 +56,24 @@ public class ApplyStudyService {
 
         return ResponseEntity.ok(applyStudyResponse);
     }
+
+    public ResponseEntity<?> addApply(Long id) {
+        ApplyStudy applyStudy = applyStudyRepository.findById(id).get();
+
+        applyStudy.setApplyState(ApplyState.ACCEPTED);
+        applyStudyRepository.save(applyStudy);
+
+        Study study = studyRepository.findById(applyStudy.getStudy().getId()).get();
+        study.addApplyStudies(applyStudy);
+
+        studyRepository.save(study);
+
+        return ResponseEntity.ok("승인 완료");
+    }
+
+    public ResponseEntity<?> refuseApply(Long id) {
+        applyStudyRepository.deleteById(id);
+
+        return ResponseEntity.ok("삭제 되었습니다.");
+    }
 }

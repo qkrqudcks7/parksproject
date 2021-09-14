@@ -28,4 +28,8 @@ public class ApplyStudy {
     private ApplyState applyState;
 
     private String message;
+
+    public void setApplyState(ApplyState applyState) {
+        this.applyState = applyState;
+    }
 }

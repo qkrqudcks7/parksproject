@@ -55,6 +55,7 @@ public class StudyController {
     public ResponseEntity<?> getOneStudy(@PathVariable("id") Long id) {
         return studyService.getOneBoard(id);
     }
+
     @DeleteMapping("/study/{id}")
     public void deleteStudy(@PathVariable("id") Long id) {
         studyRepository.deleteById(id);
