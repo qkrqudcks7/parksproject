@@ -31,7 +31,7 @@ public class StudyController {
     public ResponseEntity<?> getAllStudy() {
         List<Study> all = studyRepository.findAll();
         List<StudyResponse> collect = all.stream().map(
-                study -> new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(),study.getMembers(),study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed(), study.getMembersId(), study.getLocation(), study.getMaxMember()))
+                study -> new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(),study.getApplies(),study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed(), study.getMembersId(), study.getLocation(), study.getMaxMember()))
                 .collect(Collectors.toList());
 
         Collections.reverse(collect);
