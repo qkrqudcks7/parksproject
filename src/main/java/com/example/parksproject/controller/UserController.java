@@ -25,8 +25,8 @@ public class UserController {
 
     @GetMapping("/user/info")
     @PreAuthorize("hasRole('USER')")
-    public User getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
-        return userRepository.findById(userPrincipal.getId()).get();
+    public ResponseEntity<?> getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
+        return userService.getMyInfo(userPrincipal.getId());
     }
 
     @PutMapping("/user/info")

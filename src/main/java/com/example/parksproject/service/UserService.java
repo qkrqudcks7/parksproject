@@ -2,6 +2,8 @@ package com.example.parksproject.service;
 
 import com.example.parksproject.domain.User;
 import com.example.parksproject.payload.InfoResponse;
+import com.example.parksproject.payload.MyStudyResponse;
+import com.example.parksproject.payload.UserResponse;
 import com.example.parksproject.repository.UserRepository;
 import com.example.parksproject.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
@@ -10,12 +12,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
+
+    public ResponseEntity<?> getMyInfo(Long id) {
+        User user = userRepository.findById(id).get();
+        UserResponse userResponse = new UserResponse(user.getId(), user.getName(),user.getEmail(),user.getImageUrl(),user.getRole(),user.getEmailVerified(),user.getAuthProvider(),user.getProviderId(),user.getBio(),user.getOccupation(),user.getLocation());
+        return ResponseEntity.ok(userResponse);
+    }
 
     public ResponseEntity<?> modifyUserInfo(UserPrincipal userPrincipal, InfoResponse infoResponse) {
         User user = userRepository.findById(userPrincipal.getId()).get();
@@ -41,6 +52,8 @@ public class UserService {
     public ResponseEntity<?> findMyStudy(Long id) {
         User user = userRepository.findById(id).get();
 
-        return ResponseEntity.ok(user.getSupplyStudies());
+        List<MyStudyResponse> collect = user.getApplyStudies().stream().map(applyStudy -> new MyStudyResponse(applyStudy.getStudy().getId(), applyStudy.getApplyState().toString(), applyStudy.getStudy().getTitle(), applyStudy.getStudy().getImage(), applyStudy.getStudy().isRecruiting(), applyStudy.getStudy().isPublished(), applyStudy.getStudy().isClosed())).collect(Collectors.toList());
+
+        return ResponseEntity.ok(collect);
     }
 }
