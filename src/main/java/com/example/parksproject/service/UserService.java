@@ -37,4 +37,10 @@ public class UserService {
         return ResponseEntity.ok("수정 완료");
 
     }
+
+    public ResponseEntity<?> findMyStudy(Long id) {
+        User user = userRepository.findById(id).get();
+
+        return ResponseEntity.ok(user.getSupplyStudies());
+    }
 }

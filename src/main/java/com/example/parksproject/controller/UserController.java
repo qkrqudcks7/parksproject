@@ -34,4 +34,9 @@ public class UserController {
                                                @Valid @RequestBody InfoResponse infoResponse) {
         return userService.modifyUserInfo(userPrincipal,infoResponse);
     }
+
+    @GetMapping("/user/study")
+    public ResponseEntity<?> getMyStudy(@CurrentUser UserPrincipal userPrincipal) {
+        return userService.findMyStudy(userPrincipal.getId());
+    }
 }

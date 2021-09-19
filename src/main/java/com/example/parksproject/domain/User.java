@@ -1,11 +1,15 @@
 package com.example.parksproject.domain;
 
+import com.example.parksproject.payload.StudyResponse;
 import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -51,6 +55,13 @@ public class User {
 
     @Column(nullable = true)
     private String location;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private final List<ApplyStudy> applyStudies = new ArrayList<>();
+
+    public List<StudyResponse> getSupplyStudies() {
+        return applyStudies.stream().map(applyStudy -> new StudyResponse(applyStudy.getStudy().getId(),applyStudy.getApplyState().toString(),applyStudy.getStudy().getTitle(), applyStudy.getStudy().getImage(), applyStudy.getStudy().isRecruiting(),applyStudy.getStudy().isPublished(),applyStudy.getStudy().isClosed())).collect(Collectors.toList());
+    }
 
     public User update(String name, String imageUrl) {
         this.name = name;

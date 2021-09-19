@@ -1,15 +1,14 @@
 package com.example.parksproject.payload;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 public class StudyResponse {
 
     private Long id;
+
+    private String state;
 
     private String path;
 
@@ -55,5 +54,15 @@ public class StudyResponse {
         this.managersId = managersId;
         this.location = location;
         this.maxMember = maxMember;
+    }
+
+    public StudyResponse(Long id, String state, String title, String image, boolean recruiting, boolean published, boolean closed) {
+        this.id = id;
+        this.state =state;
+        this.title = title;
+        this.image = image;
+        this.recruiting = recruiting;
+        this.published = published;
+        this.closed = closed;
     }
 }
