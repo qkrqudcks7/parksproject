@@ -70,6 +70,7 @@ public class StudyService {
         studyParentCategory.addStudy(study);
         manager.addStudy(study);
         studyRepository.save(study);
+        log.info("이게 먼저?");
         eventPublisher.publishEvent(new StudyCreatedEvent(study));
 
         return ResponseEntity.ok("스터디 생성 완료");

@@ -88,4 +88,8 @@ public class Study {
         return types.stream().map(category -> category.getCategory().getName()).collect(Collectors.toList());
     }
 
+    public Long getManagerId() {
+        return managers.get(0).getUser().getId();
+    }
+
 }

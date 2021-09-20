@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -18,8 +19,6 @@ public class Notification {
 
     private String title;
 
-    private String link;
-
     private String message;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -28,4 +27,8 @@ public class Notification {
 
     @Enumerated(EnumType.STRING)
     private NotificationType notificationType;
+
+    private Boolean checked;
+
+    private LocalDateTime localDateTime;
 }
