@@ -1,12 +1,14 @@
 package com.example.parksproject.service;
 
 import com.example.parksproject.domain.*;
+import com.example.parksproject.event.StudyCreatedEvent;
 import com.example.parksproject.payload.StudyRequest;
 import com.example.parksproject.payload.StudyResponse;
 import com.example.parksproject.repository.*;
 import com.example.parksproject.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,8 +27,7 @@ public class StudyService {
 
     private final UserRepository userRepository;
     private final StudyRepository studyRepository;
-    private final ManagerRepository managerRepository;
-    private final MemberRepository memberRepository;
+    private final ApplicationEventPublisher eventPublisher;
     private final CategoryRepository categoryRepository;
     private final S3FileUploadService s3FileUploadService;
 
@@ -69,6 +70,8 @@ public class StudyService {
         studyParentCategory.addStudy(study);
         manager.addStudy(study);
         studyRepository.save(study);
+        eventPublisher.publishEvent(new StudyCreatedEvent(study));
+
         return ResponseEntity.ok("스터디 생성 완료");
     }
 
