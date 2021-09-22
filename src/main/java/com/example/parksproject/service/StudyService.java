@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +61,7 @@ public class StudyService {
                 .longDescription(studyRequest.getLongDescription())
                 .image(studyRequest.getImage())
                 .recruiting(studyRequest.isRecruiting())
-                .published(studyRequest.isPublished())
+                .published(true)
                 .closed(studyRequest.isClosed())
                 .location(studyRequest.getLocation())
                 .maxMember(studyRequest.getMaxMember()).build();
@@ -70,7 +71,6 @@ public class StudyService {
         studyParentCategory.addStudy(study);
         manager.addStudy(study);
         studyRepository.save(study);
-        log.info("이게 먼저?");
         eventPublisher.publishEvent(new StudyCreatedEvent(study));
 
         return ResponseEntity.ok("스터디 생성 완료");
@@ -83,4 +83,11 @@ public class StudyService {
         return new ResponseEntity<>(studyResponse, HttpStatus.OK);
     }
 
+    public ResponseEntity<?> modifyStudy(Long id, StudyRequest studyRequest) {
+        Study study = studyRepository.findById(id).get();
+        study.modifyStudy(studyRequest);
+        studyRepository.save(study);
+
+        return ResponseEntity.ok("스터디 수정 완료");
+    }
 }

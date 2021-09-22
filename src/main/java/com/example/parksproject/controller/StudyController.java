@@ -51,6 +51,12 @@ public class StudyController {
         return studyService.makeStudy(studyRequest, userPrincipal,multipartFile);
     }
 
+    @PutMapping("/study/{id}")
+    public ResponseEntity<?> modifyStudy(@PathVariable("id") Long id,
+                                         @Valid @RequestBody StudyRequest studyRequest) {
+        return studyService.modifyStudy(id,studyRequest);
+    }
+
     @GetMapping("/onestudy/{id}")
     public ResponseEntity<?> getOneStudy(@PathVariable("id") Long id) {
         return studyService.getOneBoard(id);

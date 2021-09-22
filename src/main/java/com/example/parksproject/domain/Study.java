@@ -1,5 +1,6 @@
 package com.example.parksproject.domain;
 
+import com.example.parksproject.payload.StudyRequest;
 import lombok.*;
 
 import javax.persistence.*;
@@ -52,6 +53,14 @@ public class Study {
     private String location;
 
     private int maxMember;
+
+    public void modifyStudy(StudyRequest studyRequest) {
+        this.title = studyRequest.getTitle();
+        this.shortDescription = studyRequest.getShortDescription();
+        this.longDescription = studyRequest.getLongDescription();
+        this.published = studyRequest.isPublished();
+        this.location = studyRequest.getLocation();
+    }
 
     public void addManager(Manager manager) {
         this.managers.add(manager);
