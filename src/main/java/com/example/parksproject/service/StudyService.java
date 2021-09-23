@@ -19,6 +19,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -29,6 +30,7 @@ public class StudyService {
     private final UserRepository userRepository;
     private final StudyRepository studyRepository;
     private final ApplicationEventPublisher eventPublisher;
+    private final StudyCategoryRepository studyCategoryRepository;
     private final CategoryRepository categoryRepository;
     private final S3FileUploadService s3FileUploadService;
 
@@ -89,5 +91,18 @@ public class StudyService {
         studyRepository.save(study);
 
         return ResponseEntity.ok("스터디 수정 완료");
+    }
+
+    public ResponseEntity<?> getStudyByCategory(String name) {
+
+        Category category = categoryRepository.findByName(name);
+        List<StudyCategory> studyCategory = studyCategoryRepository.findByCategoryId(category.getId());
+        List<Study> all = studyCategory.stream().map(StudyCategory::getStudy).collect(Collectors.toList());
+
+        List<StudyResponse> collect = all.stream().map(
+                study -> new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(),study.getApplies(),study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed(), study.getMembersId(), study.getLocation(), study.getMaxMember()))
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(collect,HttpStatus.OK);
     }
 }

@@ -66,4 +66,9 @@ public class StudyController {
     public void deleteStudy(@PathVariable("id") Long id) {
         studyRepository.deleteById(id);
     }
+
+    @GetMapping("/studybycategory/{name}")
+    public ResponseEntity<?> getStudyByCategory(@PathVariable("name") String name) {
+        return studyService.getStudyByCategory(name);
+    }
 }
