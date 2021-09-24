@@ -58,6 +58,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private final List<ApplyStudy> applyStudies = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private final List<Manager> managers = new ArrayList<>();
+
     public User update(String name, String imageUrl) {
         this.name = name;
         this.imageUrl = imageUrl;

@@ -29,19 +29,13 @@ public class StudyController {
 
     @GetMapping("/allstudy")
     public ResponseEntity<?> getAllStudy() {
-        List<Study> all = studyRepository.findAll();
-        List<StudyResponse> collect = all.stream().map(
-                study -> new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(),study.getApplies(),study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed(), study.getMembersId(), study.getLocation(), study.getMaxMember()))
-                .collect(Collectors.toList());
 
-        Collections.reverse(collect);
-        List<StudyResponse> newOne = new ArrayList<>();
-        for (StudyResponse i:collect) {
-            if (i.isPublished()) {
-                newOne.add(i);
-            }
-        }
-        return new ResponseEntity<>(newOne, HttpStatus.OK);
+        return studyService.findAll();
+    }
+
+    @GetMapping("/sixstudy")
+    public ResponseEntity<?> getSixStudy() {
+        return studyService.findSixStudy();
     }
 
     @PostMapping("/study")
@@ -70,5 +64,11 @@ public class StudyController {
     @GetMapping("/studybycategory/{name}")
     public ResponseEntity<?> getStudyByCategory(@PathVariable("name") String name) {
         return studyService.getStudyByCategory(name);
+    }
+
+    @GetMapping("/searchstudy/{keyword}")
+    public ResponseEntity<?> searchStudy(@PathVariable("keyword") String keyword) {
+        return studyService.searchStudy(keyword);
+
     }
 }

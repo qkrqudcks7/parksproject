@@ -1,6 +1,7 @@
 package com.example.parksproject.service;
 
 import com.example.parksproject.domain.User;
+import com.example.parksproject.payload.CreatedStudyResponse;
 import com.example.parksproject.payload.InfoResponse;
 import com.example.parksproject.payload.MyStudyResponse;
 import com.example.parksproject.payload.UserResponse;
@@ -53,6 +54,13 @@ public class UserService {
         User user = userRepository.findById(id).get();
 
         List<MyStudyResponse> collect = user.getApplyStudies().stream().map(applyStudy -> new MyStudyResponse(applyStudy.getStudy().getId(), applyStudy.getApplyState().toString(), applyStudy.getStudy().getTitle(), applyStudy.getStudy().getImage(), applyStudy.getStudy().isRecruiting(), applyStudy.getStudy().isPublished(), applyStudy.getStudy().isClosed())).collect(Collectors.toList());
+
+        return ResponseEntity.ok(collect);
+    }
+
+    public ResponseEntity<?> getCreatedStudy(Long id) {
+        User user = userRepository.findById(id).get();
+        List<CreatedStudyResponse> collect = user.getManagers().stream().map(manager -> new CreatedStudyResponse(manager.getStudy().getId(), manager.getStudy().getImage(), manager.getStudy().getTitle(), manager.getStudy().getMaxMember(), manager.getStudy().getMembers())).collect(Collectors.toList());
 
         return ResponseEntity.ok(collect);
     }

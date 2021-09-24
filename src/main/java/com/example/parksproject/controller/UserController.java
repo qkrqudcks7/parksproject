@@ -38,4 +38,9 @@ public class UserController {
     public ResponseEntity<?> getMyStudy(@CurrentUser UserPrincipal userPrincipal) {
         return userService.findMyStudy(userPrincipal.getId());
     }
+
+    @GetMapping("/user/mystudy")
+    public ResponseEntity<?> getCreatedStudy(@CurrentUser UserPrincipal userPrincipal) {
+        return userService.getCreatedStudy(userPrincipal.getId());
+    }
 }

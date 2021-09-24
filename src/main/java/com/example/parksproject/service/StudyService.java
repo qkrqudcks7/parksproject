@@ -15,9 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +33,44 @@ public class StudyService {
     private final StudyCategoryRepository studyCategoryRepository;
     private final CategoryRepository categoryRepository;
     private final S3FileUploadService s3FileUploadService;
+
+    public ResponseEntity<?> findAll() {
+        List<Study> all = studyRepository.findAll();
+        List<StudyResponse> collect = all.stream().map(
+                study -> new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(),study.getApplies(),study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed(), study.getMembersId(), study.getLocation(), study.getMaxMember()))
+                .collect(Collectors.toList());
+
+        Collections.reverse(collect);
+        List<StudyResponse> newOne = new ArrayList<>();
+        for (StudyResponse i:collect) {
+            if (i.isPublished()) {
+                newOne.add(i);
+            }
+        }
+        return new ResponseEntity<>(newOne,HttpStatus.OK);
+    }
+
+
+    public ResponseEntity<?> findSixStudy() {
+        List<Study> all = studyRepository.findAll();
+        List<StudyResponse> collect = all.stream().map(
+                study -> new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(),study.getApplies(),study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed(), study.getMembersId(), study.getLocation(), study.getMaxMember()))
+                .collect(Collectors.toList());
+
+        Collections.reverse(collect);
+        List<StudyResponse> newOne = new ArrayList<>();
+        for (StudyResponse i:collect) {
+            if (i.isPublished()) {
+                newOne.add(i);
+            }
+        }
+        List<StudyResponse> getSix = new ArrayList<>();
+        for(int i=0; i<6; i++) {
+            getSix.add(newOne.get(i));
+        }
+
+        return new ResponseEntity<>(getSix,HttpStatus.OK);
+    }
 
     public ResponseEntity<?> makeStudy(StudyRequest studyRequest, UserPrincipal userPrincipal, MultipartFile multipartFile) throws IOException {
         if (multipartFile != null) {
@@ -103,6 +141,15 @@ public class StudyService {
                 study -> new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(),study.getApplies(),study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed(), study.getMembersId(), study.getLocation(), study.getMaxMember()))
                 .collect(Collectors.toList());
 
+        return new ResponseEntity<>(collect,HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> searchStudy(String keyword) {
+        List<Study> all = studyRepository.findByKeyword(keyword);
+
+        List<StudyResponse> collect = all.stream().map(
+                study -> new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(),study.getApplies(),study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed(), study.getMembersId(), study.getLocation(), study.getMaxMember()))
+                .collect(Collectors.toList());
         return new ResponseEntity<>(collect,HttpStatus.OK);
     }
 }
