@@ -2,6 +2,7 @@ package com.example.parksproject.service;
 
 import com.example.parksproject.domain.*;
 import com.example.parksproject.event.StudyCreatedEvent;
+import com.example.parksproject.event.StudyUpdateEvent;
 import com.example.parksproject.payload.StudyRequest;
 import com.example.parksproject.payload.StudyResponse;
 import com.example.parksproject.repository.*;
@@ -127,6 +128,7 @@ public class StudyService {
         Study study = studyRepository.findById(id).get();
         study.modifyStudy(studyRequest);
         studyRepository.save(study);
+        eventPublisher.publishEvent(new StudyUpdateEvent(study,"스터디를 수정하였습니다."));
 
         return ResponseEntity.ok("스터디 수정 완료");
     }

@@ -42,4 +42,19 @@ public class StudyEventListener {
 
         notificationRepository.save(notification);
     }
+
+    @EventListener
+    public void handleStudyUpdateEvent(StudyUpdateEvent studyUpdateEvent) {
+        User u = userRepository.findById(studyUpdateEvent.getStudy().getManagerId()).get();
+
+        Notification notification = Notification.builder()
+                .title(studyUpdateEvent.getStudy().getTitle())
+                .message(studyUpdateEvent.getStudy().getShortDescription())
+                .user(u)
+                .notificationType(NotificationType.STUDY_UPDATED)
+                .checked(false)
+                .localDateTime(LocalDateTime.now()).build();
+
+        notificationRepository.save(notification);
+    }
 }
