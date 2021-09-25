@@ -31,4 +31,8 @@ public class Notification {
     private Boolean checked;
 
     private LocalDateTime localDateTime;
+
+    public void setChecked(Boolean checked) {
+        this.checked = checked;
+    }
 }

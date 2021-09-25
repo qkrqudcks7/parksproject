@@ -29,4 +29,12 @@ public class NotificationService {
 
         return new ResponseEntity<>(collect, HttpStatus.OK);
     }
+
+    public ResponseEntity<?> clickAlarm(Long id) {
+        Notification notification = notificationRepository.findById(id).get();
+        notification.setChecked(true);
+        notificationRepository.save(notification);
+
+        return ResponseEntity.ok("클릭 완료");
+    }
 }
