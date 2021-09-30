@@ -12,7 +12,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import javax.persistence.EntityManager;
 
 
-@EnableScheduling // 스케줄러 기능 활성화
 @EnableBatchProcessing // 배치 기능 활성화
 @SpringBootApplication
 @EnableConfigurationProperties(AppProperties.class)
