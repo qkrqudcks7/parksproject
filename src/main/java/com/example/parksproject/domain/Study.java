@@ -101,8 +101,8 @@ public class Study {
         return managers.get(0).getUser().getId();
     }
 
-    public Study setClosed(boolean closed) {
-        this.closed = closed;
-        return null;
+    public Study setClosed() {
+        this.closed = true;
+        return this;
     }
 }

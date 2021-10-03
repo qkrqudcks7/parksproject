@@ -2,11 +2,13 @@ package com.example.parksproject.batch;
 
 import com.example.parksproject.domain.Study;
 import com.example.parksproject.repository.StudyRepository;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemProcessor;
@@ -22,9 +24,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TutorialConfig {
 
+    public static final String JOB_NAME = "transactionProcessorBatch";
+    public static final String BEAN_PREFIX = JOB_NAME + "_";
     private final StudyRepository studyRepository;
 
-    @Bean
+    @Bean(JOB_NAME)
     public Job closedStudyJob(JobBuilderFactory jobBuilderFactory, Step closedStudyStep) {
         log.info("************ this is closedStudyJob");
         return jobBuilderFactory.get("closedStudyJob")
@@ -33,7 +37,8 @@ public class TutorialConfig {
                 .build();
     }
 
-    @Bean Step closedStudyStep(StepBuilderFactory stepBuilderFactory) {
+    @Bean(BEAN_PREFIX + "step")
+    public Step closedStudyStep(StepBuilderFactory stepBuilderFactory) {
         log.info("********** this is closedStudyStep");
         return stepBuilderFactory.get("closedStudyStep")
                 .<Study, Study> chunk(10)
@@ -55,13 +60,19 @@ public class TutorialConfig {
     @Bean
     public ItemProcessor<Study, Study> closedStudyProcessor() {
         return study -> {
-            log.info("********** This is closedStudyProcessor");
-            return study.setClosed(true);
+            log.info("********************************");
+            return study.setClosed();
         };
     }
 
     public ItemWriter<Study> closedStudyWriter() {
         log.info("********** This is closedStudyWriter");
-        return (studyRepository::saveAll);
+        return studies -> {
+            log.info("gdgdgdgdgd");
+            for (Study study: studies) {
+                log.info(study.getTitle());
+            }
+        };
+//        return (studyRepository::saveAll);
     }
 }
