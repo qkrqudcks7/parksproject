@@ -1,9 +1,6 @@
 package com.example.parksproject.controller;
 
-import com.example.parksproject.domain.Message;
 import com.example.parksproject.payload.MessageResponse;
-import com.example.parksproject.security.CurrentUser;
-import com.example.parksproject.security.UserPrincipal;
 import com.example.parksproject.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

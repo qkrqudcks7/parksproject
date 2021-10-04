@@ -14,9 +14,9 @@ public class ChatRoomController {
 
     private final ChatRoomService chatRoomService;
 
-    @GetMapping("/chatroom")
-    public ResponseEntity<?> allRoom() {
-        return chatRoomService.allRoom();
+    @GetMapping("/chatroomlist/{id}")
+    public ResponseEntity<?> allRoom(@PathVariable Long id) {
+        return chatRoomService.allRoom(id);
     }
 
     @PostMapping("/chatroom")
@@ -29,5 +29,10 @@ public class ChatRoomController {
     @GetMapping("/chatroom/{id}")
     public ResponseEntity<?> room(@PathVariable Long id) {
         return chatRoomService.getRoom(id);
+    }
+
+    @GetMapping("/chatroom/message/{id}")
+    public ResponseEntity<?> getMessage(@PathVariable Long id) {
+        return chatRoomService.getMessage(id);
     }
 }

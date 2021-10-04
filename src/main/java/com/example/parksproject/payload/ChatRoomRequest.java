@@ -10,4 +10,5 @@ public class ChatRoomRequest {
     private Long id;
     private String title;
     private String name;
+    private Long studyId;
 }
