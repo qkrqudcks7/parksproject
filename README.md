@@ -19,3 +19,4 @@
 
 ### ERD
 
+![image](https://user-images.githubusercontent.com/66015002/136005368-b0093b17-2cdb-4e0b-86a6-10e23ec6e10c.png)
