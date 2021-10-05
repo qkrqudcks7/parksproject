@@ -38,7 +38,7 @@ public class StudyService {
     public ResponseEntity<?> findAll() {
         List<Study> all = studyRepository.findAll();
         List<StudyResponse> collect = all.stream().map(
-                study -> new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(),study.getApplies(),study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed(), study.getMembersId(), study.getLocation(), study.getMaxMember()))
+                study -> new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(),study.getApplies(),study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed(), study.getLocation(), study.getMaxMember()))
                 .collect(Collectors.toList());
 
         Collections.reverse(collect);
@@ -55,7 +55,7 @@ public class StudyService {
     public ResponseEntity<?> findSixStudy() {
         List<Study> all = studyRepository.findAll();
         List<StudyResponse> collect = all.stream().map(
-                study -> new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(),study.getApplies(),study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed(), study.getMembersId(), study.getLocation(), study.getMaxMember()))
+                study -> new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(),study.getApplies(),study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed(), study.getLocation(), study.getMaxMember()))
                 .collect(Collectors.toList());
 
         Collections.reverse(collect);
@@ -119,7 +119,7 @@ public class StudyService {
 
     public ResponseEntity<?> getOneBoard(Long id) {
         Study study = studyRepository.findById(id).get();
-        StudyResponse studyResponse = new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(), study.getApplies(), study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed(), study.getMembersId(), study.getLocation(), study.getMaxMember());
+        StudyResponse studyResponse = new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(), study.getApplies(), study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed(), study.getLocation(), study.getMaxMember());
 
         return new ResponseEntity<>(studyResponse, HttpStatus.OK);
     }
@@ -140,7 +140,7 @@ public class StudyService {
         List<Study> all = studyCategory.stream().map(StudyCategory::getStudy).collect(Collectors.toList());
 
         List<StudyResponse> collect = all.stream().map(
-                study -> new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(),study.getApplies(),study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed(), study.getMembersId(), study.getLocation(), study.getMaxMember()))
+                study -> new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(),study.getApplies(),study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed(), study.getLocation(), study.getMaxMember()))
                 .collect(Collectors.toList());
 
         return new ResponseEntity<>(collect,HttpStatus.OK);
@@ -150,7 +150,7 @@ public class StudyService {
         List<Study> all = studyRepository.findByKeyword(keyword);
 
         List<StudyResponse> collect = all.stream().map(
-                study -> new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(),study.getApplies(),study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed(), study.getMembersId(), study.getLocation(), study.getMaxMember()))
+                study -> new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(),study.getApplies(),study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed(), study.getLocation(), study.getMaxMember()))
                 .collect(Collectors.toList());
         return new ResponseEntity<>(collect,HttpStatus.OK);
     }

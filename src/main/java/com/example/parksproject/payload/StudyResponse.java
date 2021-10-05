@@ -30,13 +30,11 @@ public class StudyResponse {
 
     private boolean closed;
 
-    private List<Long> managersId;
-
     private String location;
 
     private int maxMember;
 
-    public StudyResponse(Long id, String path, String title, String shortDescription, String longDescription, String image, List<String> members, List<String> managers, List<String> categorys, boolean recruiting, boolean published, boolean closed, List<Long> managersId, String location, int maxMember) {
+    public StudyResponse(Long id, String path, String title, String shortDescription, String longDescription, String image, List<String> members, List<String> managers, List<String> categorys, boolean recruiting, boolean published, boolean closed, String location, int maxMember) {
         this.id = id;
         this.path = path;
         this.title = title;
@@ -49,7 +47,6 @@ public class StudyResponse {
         this.recruiting = recruiting;
         this.published = published;
         this.closed = closed;
-        this.managersId = managersId;
         this.location = location;
         this.maxMember = maxMember;
     }

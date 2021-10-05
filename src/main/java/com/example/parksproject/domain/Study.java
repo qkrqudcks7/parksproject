@@ -33,9 +33,6 @@ public class Study {
     private String image;
 
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
-    private final List<Member> members = new ArrayList<>();
-
-    @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
     private final List<Manager> managers = new ArrayList<>();
 
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
@@ -66,23 +63,12 @@ public class Study {
         this.managers.add(manager);
     }
 
-    public void addMember(Member member) {
-        this.members.add(member);
-    }
-
     public void addApplyStudies(ApplyStudy applyStudy) {
         this.applyStudies.add(applyStudy);
     }
 
     public void addStudyCategory(List<StudyCategory> studyCategory) {
         this.types.addAll(studyCategory);
-    }
-
-    public List<String> getMembers() {
-        return members.stream().map(member -> member.getUser().getName()).collect(Collectors.toList());
-    }
-    public List<Long> getMembersId() {
-        return managers.stream().map(manager -> manager.getUser().getId()).collect(Collectors.toList());
     }
 
     public List<String> getApplies() {

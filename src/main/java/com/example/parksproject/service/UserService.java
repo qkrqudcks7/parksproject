@@ -60,7 +60,7 @@ public class UserService {
 
     public ResponseEntity<?> getCreatedStudy(Long id) {
         User user = userRepository.findById(id).get();
-        List<CreatedStudyResponse> collect = user.getManagers().stream().map(manager -> new CreatedStudyResponse(manager.getStudy().getId(), manager.getStudy().getImage(), manager.getStudy().getTitle(), manager.getStudy().getMaxMember(), manager.getStudy().getMembers())).collect(Collectors.toList());
+        List<CreatedStudyResponse> collect = user.getManagers().stream().map(manager -> new CreatedStudyResponse(manager.getStudy().getId(), manager.getStudy().getImage(), manager.getStudy().getTitle(), manager.getStudy().getMaxMember(), manager.getStudy().getApplies())).collect(Collectors.toList());
 
         return ResponseEntity.ok(collect);
     }
