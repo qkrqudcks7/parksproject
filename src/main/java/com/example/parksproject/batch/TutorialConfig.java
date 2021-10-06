@@ -38,6 +38,7 @@ public class TutorialConfig {
     }
 
     @Bean(BEAN_PREFIX + "step")
+    @JobScope
     public Step closedStudyStep(StepBuilderFactory stepBuilderFactory) {
         log.info("********** this is closedStudyStep");
         return stepBuilderFactory.get("closedStudyStep")
@@ -67,11 +68,6 @@ public class TutorialConfig {
 
     public ItemWriter<Study> closedStudyWriter() {
         log.info("********** This is closedStudyWriter");
-//        return studies -> {
-//            for (Study study: studies) {
-//                log.info(study.getTitle());
-//            }
-//        };
         return (studyRepository::saveAll);
     }
 }
