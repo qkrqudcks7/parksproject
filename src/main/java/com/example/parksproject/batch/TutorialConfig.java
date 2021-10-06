@@ -67,12 +67,11 @@ public class TutorialConfig {
 
     public ItemWriter<Study> closedStudyWriter() {
         log.info("********** This is closedStudyWriter");
-        return studies -> {
-            log.info("gdgdgdgdgd");
-            for (Study study: studies) {
-                log.info(study.getTitle());
-            }
-        };
-//        return (studyRepository::saveAll);
+//        return studies -> {
+//            for (Study study: studies) {
+//                log.info(study.getTitle());
+//            }
+//        };
+        return (studyRepository::saveAll);
     }
 }
