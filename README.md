@@ -11,6 +11,7 @@
 
 - Spring boot (API Server)
 - Spring Security (Security)
+- Spring batch (batch)
 - Mysql (RDB)
 - JPA,Query_DSL (ORM)
 - JWT, OAuth2 (Login)
