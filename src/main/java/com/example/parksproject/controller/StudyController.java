@@ -8,6 +8,7 @@ import com.example.parksproject.security.CurrentUser;
 import com.example.parksproject.security.UserPrincipal;
 import com.example.parksproject.service.StudyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

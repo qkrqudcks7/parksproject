@@ -24,22 +24,21 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TutorialConfig {
 
-    public static final String JOB_NAME = "transactionProcessorBatch";
-    public static final String BEAN_PREFIX = JOB_NAME + "_";
     private final StudyRepository studyRepository;
+    private final JobBuilderFactory jobBuilderFactory;
+    private final StepBuilderFactory stepBuilderFactory;
 
-    @Bean(JOB_NAME)
-    public Job closedStudyJob(JobBuilderFactory jobBuilderFactory, Step closedStudyStep) {
+    @Bean
+    public Job closedStudyJob() {
         log.info("************ this is closedStudyJob");
         return jobBuilderFactory.get("closedStudyJob")
                 .preventRestart()
-                .start(closedStudyStep)
+                .start(closedStudyStep())
                 .build();
     }
 
-    @Bean(BEAN_PREFIX + "step")
-    @JobScope
-    public Step closedStudyStep(StepBuilderFactory stepBuilderFactory) {
+    @Bean
+    public Step closedStudyStep() {
         log.info("********** this is closedStudyStep");
         return stepBuilderFactory.get("closedStudyStep")
                 .<Study, Study> chunk(10)
@@ -52,7 +51,7 @@ public class TutorialConfig {
     @Bean
     public ListItemReader<Study> closedStudyReader() {
         log.info("************ this is closedStudyReader");
-        List<Study> byClosedIsFalse = studyRepository.findByClosedIsFalse();
+        List<Study> byClosedIsFalse = studyRepository.findByClosedIsTrue();
         log.info("************* byClosedIsFalse Size :" + byClosedIsFalse.size());
 
         return new ListItemReader<>(byClosedIsFalse);
@@ -62,7 +61,7 @@ public class TutorialConfig {
     public ItemProcessor<Study, Study> closedStudyProcessor() {
         return study -> {
             log.info("********************************");
-            return study.setClosed();
+            return study.setOpen();
         };
     }
 

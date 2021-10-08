@@ -1,10 +1,12 @@
 package com.example.parksproject.payload;
 
 import lombok.Getter;
+
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
-public class StudyResponse {
+public class StudyResponse implements Serializable {
 
     private Long id;
 

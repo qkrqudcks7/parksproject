@@ -91,4 +91,8 @@ public class Study {
         this.closed = true;
         return this;
     }
+    public Study setOpen() {
+        this.closed = false;
+        return this;
+    }
 }
