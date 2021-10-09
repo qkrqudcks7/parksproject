@@ -22,7 +22,7 @@ import java.util.List;
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
-public class TutorialConfig {
+public class StudyJobConfig {
 
     private final StudyRepository studyRepository;
     private final JobBuilderFactory jobBuilderFactory;
