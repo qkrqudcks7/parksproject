@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import javax.persistence.EntityManager;
 
 
+@EnableScheduling // 스케쥴 활성화
 @EnableCaching // 캐시 기능 활성화
 @EnableBatchProcessing // 배치 기능 활성화
 @SpringBootApplication

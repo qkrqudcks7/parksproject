@@ -36,21 +36,13 @@ public class RedisRepositoryConfig extends CachingConfigurerSupport {
         return new LettuceConnectionFactory(redisHost,redisPort);
     }
 
-    @Bean
-    public RedisTemplate<?,?> redisTemplate() {
-        RedisTemplate<byte[], byte[]> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(redisConnectionFactory());
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        return redisTemplate;
-    }
-
     @Override
     public CacheManager cacheManager() {
         RedisCacheManager.RedisCacheManagerBuilder builder =
                 RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory());
 
         RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
                 .prefixCacheNameWith("prefix:")
                 .entryTtl(Duration.ofHours(5L));
 

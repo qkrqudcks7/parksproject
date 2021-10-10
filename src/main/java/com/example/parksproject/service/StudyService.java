@@ -10,6 +10,10 @@ import com.example.parksproject.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -53,24 +57,14 @@ public class StudyService {
 
 
     public ResponseEntity<?> findSixStudy() {
-        List<Study> all = studyRepository.findAll();
+        Page<Study> all = studyRepository.findAll(PageRequest.of(0,6, Sort.Direction.DESC,"id"));
         List<StudyResponse> collect = all.stream().map(
                 study -> new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(),study.getApplies(),study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed(), study.getLocation(), study.getMaxMember()))
                 .collect(Collectors.toList());
 
         Collections.reverse(collect);
-        List<StudyResponse> newOne = new ArrayList<>();
-        for (StudyResponse i:collect) {
-            if (i.isPublished()) {
-                newOne.add(i);
-            }
-        }
-        List<StudyResponse> getSix = new ArrayList<>();
-        for(int i=0; i<6; i++) {
-            getSix.add(newOne.get(i));
-        }
 
-        return new ResponseEntity<>(getSix,HttpStatus.OK);
+        return new ResponseEntity<>(collect,HttpStatus.OK);
     }
 
     public ResponseEntity<?> makeStudy(StudyRequest studyRequest, UserPrincipal userPrincipal, MultipartFile multipartFile) throws IOException {
@@ -117,11 +111,11 @@ public class StudyService {
         return ResponseEntity.ok("스터디 생성 완료");
     }
 
-    public ResponseEntity<?> getOneBoard(Long id) {
+    public StudyResponse getOneBoard(Long id) {
         Study study = studyRepository.findById(id).get();
         StudyResponse studyResponse = new StudyResponse(study.getId(), study.getPath(), study.getTitle(), study.getShortDescription(), study.getLongDescription(), study.getImage(), study.getApplies(), study.getManagers(), study.getCategorys(), study.isRecruiting(), study.isPublished(), study.isClosed(), study.getLocation(), study.getMaxMember());
 
-        return new ResponseEntity<>(studyResponse, HttpStatus.OK);
+        return studyResponse;
     }
 
     public ResponseEntity<?> modifyStudy(Long id, StudyRequest studyRequest) {

@@ -1,6 +1,5 @@
 package com.example.parksproject.controller;
 
-import com.example.parksproject.domain.Category;
 import com.example.parksproject.payload.CategoryRequest;
 import com.example.parksproject.repository.CategoryRepository;
 import com.example.parksproject.service.CategoryService;
