@@ -23,10 +23,10 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public ResponseEntity<?> getMyInfo(Long id) {
+    public UserResponse getMyInfo(Long id) {
         User user = userRepository.findById(id).get();
         UserResponse userResponse = new UserResponse(user.getId(), user.getName(),user.getEmail(),user.getImageUrl(),user.getRole(),user.getEmailVerified(),user.getAuthProvider(),user.getProviderId(),user.getBio(),user.getOccupation(),user.getLocation());
-        return ResponseEntity.ok(userResponse);
+        return userResponse;
     }
 
     public ResponseEntity<?> modifyUserInfo(UserPrincipal userPrincipal, InfoResponse infoResponse) {

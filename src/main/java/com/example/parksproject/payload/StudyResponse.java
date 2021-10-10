@@ -1,11 +1,13 @@
 package com.example.parksproject.payload;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Getter
+@NoArgsConstructor
 public class StudyResponse implements Serializable {
 
     private Long id;

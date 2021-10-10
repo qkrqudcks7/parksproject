@@ -53,6 +53,7 @@ public class StudyController {
     }
 
     @GetMapping("/onestudy/{id}")
+    @Cacheable(value = "study", key = "#id", cacheManager = "cacheManager")
     public ResponseEntity<?> getOneStudy(@PathVariable("id") Long id) {
         return studyService.getOneBoard(id);
     }

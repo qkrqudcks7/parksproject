@@ -6,6 +6,7 @@ import net.minidev.json.annotate.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor @NoArgsConstructor
 @Builder
-public class User {
+public class User implements Serializable {
 
     @Id @GeneratedValue
     @Column(name = "user_id")

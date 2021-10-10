@@ -1,12 +1,12 @@
 package com.example.parksproject.controller;
 
-import com.example.parksproject.domain.User;
 import com.example.parksproject.payload.InfoResponse;
-import com.example.parksproject.repository.UserRepository;
+import com.example.parksproject.payload.UserResponse;
 import com.example.parksproject.security.CurrentUser;
 import com.example.parksproject.security.UserPrincipal;
 import com.example.parksproject.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,9 +22,10 @@ public class UserController {
 
     private final UserService userService;
 
+    @Cacheable(value = "users", key = "#userPrincipal.id", cacheManager = "cacheManager")
     @GetMapping("/user/info")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
+    public UserResponse getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
         return userService.getMyInfo(userPrincipal.getId());
     }
 

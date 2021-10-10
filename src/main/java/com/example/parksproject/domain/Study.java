@@ -4,6 +4,7 @@ import com.example.parksproject.payload.StudyRequest;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,7 +12,7 @@ import java.util.stream.Collectors;
 @Entity
 @Getter
 @Builder @AllArgsConstructor @NoArgsConstructor
-public class Study {
+public class Study implements Serializable {
 
     @Id @GeneratedValue
     @Column(name = "study_id")

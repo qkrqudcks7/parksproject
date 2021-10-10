@@ -4,10 +4,14 @@ import com.example.parksproject.domain.AuthProvider;
 import com.example.parksproject.domain.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
-public class UserResponse {
+@NoArgsConstructor
+public class UserResponse implements Serializable {
 
     private Long id;
 
