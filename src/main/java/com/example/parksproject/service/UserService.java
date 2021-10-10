@@ -50,18 +50,18 @@ public class UserService {
 
     }
 
-    public ResponseEntity<?> findMyStudy(Long id) {
+    public List<MyStudyResponse> findMyStudy(Long id) {
         User user = userRepository.findById(id).get();
 
         List<MyStudyResponse> collect = user.getApplyStudies().stream().map(applyStudy -> new MyStudyResponse(applyStudy.getStudy().getId(), applyStudy.getApplyState().toString(), applyStudy.getStudy().getTitle(), applyStudy.getStudy().getImage(), applyStudy.getStudy().isRecruiting(), applyStudy.getStudy().isPublished(), applyStudy.getStudy().isClosed())).collect(Collectors.toList());
 
-        return ResponseEntity.ok(collect);
+        return collect;
     }
 
-    public ResponseEntity<?> getCreatedStudy(Long id) {
+    public List<CreatedStudyResponse> getCreatedStudy(Long id) {
         User user = userRepository.findById(id).get();
         List<CreatedStudyResponse> collect = user.getManagers().stream().map(manager -> new CreatedStudyResponse(manager.getStudy().getId(), manager.getStudy().getImage(), manager.getStudy().getTitle(), manager.getStudy().getMaxMember(), manager.getStudy().getApplies())).collect(Collectors.toList());
 
-        return ResponseEntity.ok(collect);
+        return collect;
     }
 }

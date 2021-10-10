@@ -3,11 +3,12 @@ package com.example.parksproject.payload;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class MyStudyResponse {
+public class MyStudyResponse implements Serializable {
 
     private Long id;
 
