@@ -33,7 +33,6 @@ public class StudyJobConfig {
     public Job closedStudyJob() {
         log.info("************ this is closedStudyJob");
         return jobBuilderFactory.get("closedStudyJob")
-                .preventRestart()
                 .start(closedStudyStep())
                 .build();
     }
